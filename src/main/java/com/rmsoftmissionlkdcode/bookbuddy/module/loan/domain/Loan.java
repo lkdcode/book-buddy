@@ -1,6 +1,7 @@
 package com.rmsoftmissionlkdcode.bookbuddy.module.loan.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.rmsoftmissionlkdcode.bookbuddy.global.common.BaseEntity;
 import com.rmsoftmissionlkdcode.bookbuddy.module.book.domain.Book;
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.domain.User;
 import lombok.AccessLevel;
@@ -18,11 +19,7 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 @Table(name = "tb_loan")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-public class Loan {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class Loan extends BaseEntity {
 
     @CreatedDate
     @Column(name = "borrowed_at", updatable = false)
