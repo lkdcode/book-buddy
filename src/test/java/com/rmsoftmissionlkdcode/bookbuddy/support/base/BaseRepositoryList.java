@@ -41,7 +41,7 @@ public abstract class BaseRepositoryList {
 
     protected static final Long LOAN_ID = 6L;
     protected static final Long LOAN_USER_ID = 1L;
-    protected static final Long LOAN_BOOK_ID = 7L;
+    protected static final Long LOAN_BOOK_ID = 6L;
 
     @Autowired
     protected UserRepository userRepository;
