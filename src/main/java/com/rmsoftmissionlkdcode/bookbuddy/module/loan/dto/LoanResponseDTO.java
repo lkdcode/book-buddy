@@ -6,18 +6,18 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
-import static com.rmsoftmissionlkdcode.bookbuddy.module.loan.dto.LoanResponseDTO.Loan;
+import static com.rmsoftmissionlkdcode.bookbuddy.module.loan.dto.LoanResponseDTO.Borrowed;
 import static com.rmsoftmissionlkdcode.bookbuddy.module.loan.dto.LoanResponseDTO.Returned;
 
-public sealed interface LoanResponseDTO permits Loan, Returned {
+public sealed interface LoanResponseDTO permits Borrowed, Returned {
     @Builder
-    record Loan(
+    record Borrowed(
             Long loanId,
             String userEmail,
             String title,
             String author,
             @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "Asia/Seoul")
-            LocalDateTime borrowAt
+            LocalDateTime borrowedAt
     ) implements LoanResponseDTO {
     }
 
@@ -27,7 +27,7 @@ public sealed interface LoanResponseDTO permits Loan, Returned {
             String title,
             String author,
             @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "Asia/Seoul")
-            LocalDateTime borrowAt,
+            LocalDateTime borrowedAt,
             @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "Asia/Seoul")
             LocalDateTime returnedAt
     ) implements LoanResponseDTO {
