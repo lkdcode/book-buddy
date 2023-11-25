@@ -3,6 +3,9 @@ package com.rmsoftmissionlkdcode.bookbuddy.module.loan.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rmsoftmissionlkdcode.bookbuddy.global.common.BaseEntity;
 import com.rmsoftmissionlkdcode.bookbuddy.module.book.domain.Book;
+import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.InvalidReturningBookException;
+import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.InvalidReturningUserException;
+import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.enums.LoanErrorCode;
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -46,5 +49,17 @@ public class Loan extends BaseEntity {
 
     public void returned() {
         this.returnedAt = LocalDateTime.now();
+    }
+
+    public void validateReturnUser(String userEmail) {
+        if (!user.getEmail().equals(userEmail)) {
+            throw new InvalidReturningUserException(LoanErrorCode.INVALID_RETURN_USER_ERROR);
+        }
+    }
+
+    public void validateReturnBookId(Long bookId) {
+        if (!book.getId().equals(bookId)) {
+            throw new InvalidReturningBookException(LoanErrorCode.INVALID_RETURN_BOOK_ERROR);
+        }
     }
 }
