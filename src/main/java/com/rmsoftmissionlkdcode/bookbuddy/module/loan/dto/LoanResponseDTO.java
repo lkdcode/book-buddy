@@ -12,6 +12,7 @@ import static com.rmsoftmissionlkdcode.bookbuddy.module.loan.dto.LoanResponseDTO
 public sealed interface LoanResponseDTO permits Loan, Returned {
     @Builder
     record Loan(
+            Long loanId,
             String userEmail,
             String title,
             String author,
