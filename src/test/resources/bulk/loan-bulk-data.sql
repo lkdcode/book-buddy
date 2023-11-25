@@ -6,7 +6,7 @@ VALUES
     ,(3, now(), null, 3, 3, now(), now())
     ,(4, now(), null, 4, 3, now(), now())
     ,(5, now(), null, 5, 4, now(), now())
-    ,(6, now(), null, 1, 7, now(), now())
+    ,(6, now(), null, 1, 6, now(), now())
     ,(7, now(), null, 7, 4, now(), now())
     ,(8, now(), null, 8, 4, now(), now())
     ,(9, now(), null, 9, 1, now(), now())
