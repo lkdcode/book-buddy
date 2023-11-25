@@ -16,9 +16,9 @@ public class LoanCommandApi {
     private final LoanCommandUsecase loanCommandUsecase;
 
     @PostMapping("/{bookId}")
-    public LoanResponseDTO.Loan getLoanBookToUser(
+    public LoanResponseDTO.Borrowed getLoanBookToUser(
             @PathVariable(name = "bookId") @Min(1) Long bookId,
-            @RequestBody @Valid LoanRequestDTO.Loan dto
+            @RequestBody @Valid LoanRequestDTO.CheckOutDTO dto
     ) {
         return loanCommandUsecase.executeLoanBookToUser(bookId, dto);
     }
@@ -27,7 +27,7 @@ public class LoanCommandApi {
     public LoanResponseDTO.Returned getReturnedBook(
             @PathVariable(name = "bookId") @Min(1) Long bookId,
             @PathVariable(name = "loanId") @Min(1) Long loanId,
-            @RequestBody @Valid LoanRequestDTO.Returned dto
+            @RequestBody @Valid LoanRequestDTO.CheckInDTO dto
     ) {
         return loanCommandUsecase.executeReturnBook(loanId, bookId, dto);
     }
