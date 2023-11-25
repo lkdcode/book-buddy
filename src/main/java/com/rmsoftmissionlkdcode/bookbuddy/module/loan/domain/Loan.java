@@ -24,7 +24,6 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Loan extends BaseEntity {
 
-    @CreatedDate
     @Column(name = "borrowed_at", updatable = false)
     @JsonFormat(shape = STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "Asia/Seoul")
     private LocalDateTime borrowedAt;
@@ -47,7 +46,11 @@ public class Loan extends BaseEntity {
         this.book = book;
     }
 
-    public void returned() {
+    public void borrowedAt() {
+        this.borrowedAt = LocalDateTime.now();
+    }
+
+    public void returnedAt() {
         this.returnedAt = LocalDateTime.now();
     }
 
