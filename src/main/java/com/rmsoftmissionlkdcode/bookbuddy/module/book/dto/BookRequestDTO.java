@@ -1,11 +1,14 @@
 package com.rmsoftmissionlkdcode.bookbuddy.module.book.dto;
 
+import lombok.Builder;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import static com.rmsoftmissionlkdcode.bookbuddy.module.book.dto.BookRequestDTO.*;
 
 public sealed interface BookRequestDTO permits Create, Update {
+    @Builder
     record Create(
             @NotBlank(message = "ISBN 고유 번호를 입력해주세요.")
             String ISBN,
@@ -18,6 +21,7 @@ public sealed interface BookRequestDTO permits Create, Update {
     ) implements BookRequestDTO {
     }
 
+    @Builder
     record Update(
             @NotBlank(message = "수정할 ISBN 고유 번호를 입력해주세요.")
             String ISBN,
