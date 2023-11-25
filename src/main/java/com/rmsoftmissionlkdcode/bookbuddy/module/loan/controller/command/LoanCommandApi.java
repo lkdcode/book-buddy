@@ -23,11 +23,12 @@ public class LoanCommandApi {
         return loanCommandUsecase.executeLoanBookToUser(bookId, dto);
     }
 
-    @PostMapping("/returned/{bookId}")
+    @PostMapping("/{bookId}/returned/{loanId}")
     public LoanResponseDTO.Returned getReturnedBook(
             @PathVariable(name = "bookId") @Min(1) Long bookId,
+            @PathVariable(name = "loanId") @Min(1) Long loanId,
             @RequestBody @Valid LoanRequestDTO.Returned dto
     ) {
-        return loanCommandUsecase.executeReturnBook(bookId, dto);
+        return loanCommandUsecase.executeReturnBook(loanId, bookId, dto);
     }
 }
