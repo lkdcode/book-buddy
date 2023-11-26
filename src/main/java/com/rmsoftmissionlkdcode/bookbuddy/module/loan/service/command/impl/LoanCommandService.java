@@ -18,8 +18,11 @@ import com.rmsoftmissionlkdcode.bookbuddy.module.user.exception.UserNotFoundByEm
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.exception.enums.UserErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class LoanCommandService implements LoanCommandUsecase {
     private final BookRepository bookRepository;
@@ -27,6 +30,7 @@ public class LoanCommandService implements LoanCommandUsecase {
     private final LoanRepository loanRepository;
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public LoanResponseDTO.Borrowed executeLoanBookToUser(Long bookId, LoanRequestDTO.CheckOutDTO dto) {
         Book book = findBookById(bookId);
         User user = findUserByEmail(dto.userEmail());
