@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface LoanResponseMapper {
     LoanResponseMapper INSTANCE = Mappers.getMapper(LoanResponseMapper.class);
@@ -23,5 +25,13 @@ public interface LoanResponseMapper {
     @Mapping(target = "author", source = "book.author")
     LoanResponseDTO.Returned loanToReturnedDTO(Loan loan);
 
+    @Mapping(target = "loanId", source = "id")
+    @Mapping(target = "userEmail", source = "user.email")
+    @Mapping(target = "title", source = "book.title")
+    @Mapping(target = "author", source = "book.author")
+    LoanResponseDTO.History loanToHistoryDTO(Loan loan);
+
     Loan createLoanFromBookAndUser(Book book, User user);
+
+    List<LoanResponseDTO.History> loanToHistoryListDTO(List<Loan> loan);
 }
