@@ -35,9 +35,8 @@ public class BookCommandService implements BookCommandUsecase {
     public BookResponseDTO.Update executeUpdateBook(Long bookId, BookRequestDTO.Update updateDTO) {
         Book book = findById(bookId);
 
-        // TODO : ISBN 바꿀 때 중복이 없어야 함.
         if (!checkForChange(book, updateDTO)) {
-            throw new NoChangesToApplyException(null);
+            throw new NoChangesToApplyException(BookErrorCode.NO_CHANGE_BOOK_INFORMATION);
         }
 
         if (isISBNChanged(book, updateDTO)) {
