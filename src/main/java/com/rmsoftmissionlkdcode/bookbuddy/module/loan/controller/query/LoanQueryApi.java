@@ -1,5 +1,6 @@
 package com.rmsoftmissionlkdcode.bookbuddy.module.loan.controller.query;
 
+import com.rmsoftmissionlkdcode.bookbuddy.module.loan.dto.LoanResponseDTO;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.service.query.LoanQueryUsecase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @Tag(name = "loan", description = "도서 대출 API")
 @RestController
@@ -23,9 +25,9 @@ public class LoanQueryApi {
             @ApiResponse(responseCode = "200", description = "도서 대출 내역 조회에 성공하였습니다.")
     })
     @GetMapping("/{bookId}")
-    public void getLoanHistory(
+    public List<LoanResponseDTO.History> getLoanHistory(
             @PathVariable(name = "bookId") @Min(1) Long bookId
     ) {
-        loanQueryUsecase.retrieveFindAllByBookId(bookId);
+        return loanQueryUsecase.retrieveFindAllByBookId(bookId);
     }
 }
