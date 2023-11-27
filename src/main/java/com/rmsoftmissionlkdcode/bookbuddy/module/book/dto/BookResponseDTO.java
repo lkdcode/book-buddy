@@ -10,7 +10,7 @@ public sealed interface BookResponseDTO permits Create, Update {
             String ISBN,
             String title,
             String author,
-            int quantity
+            Long quantity
     ) implements BookResponseDTO {
     }
 
@@ -19,7 +19,7 @@ public sealed interface BookResponseDTO permits Create, Update {
             String ISBN,
             String title,
             String author,
-            int quantity
+            Long quantity
     ) implements BookResponseDTO {
     }
 }

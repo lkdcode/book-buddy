@@ -109,10 +109,10 @@ public class BookCommandService implements BookCommandUsecase {
     }
 
     private static boolean isQuantityChanged(Book book, BookRequestDTO.Update updateDTO) {
-        if (updateDTO.quantity() == 0) {
+        if (updateDTO.quantity() == null) {
             return false;
         }
 
-        return book.getQuantity() != updateDTO.quantity();
+        return !book.getQuantity().equals(updateDTO.quantity());
     }
 }

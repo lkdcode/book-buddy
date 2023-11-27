@@ -28,13 +28,13 @@ public class Book extends BaseEntity {
     @Column(name = "author", nullable = false)
     private String author;
     @Column(name = "quantity", nullable = false)
-    private int quantity;
+    private Long quantity;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Loan> loans = new ArrayList<>();
 
     @Builder
-    public Book(String ISBN, String title, String author, int quantity) {
+    public Book(String ISBN, String title, String author, Long quantity) {
         validateISBN(ISBN);
         validateQuantity(quantity);
         this.ISBN = ISBN;
@@ -56,7 +56,7 @@ public class Book extends BaseEntity {
         this.author = updateAuthor;
     }
 
-    public void updateQuantity(int updateQuantity) {
+    public void updateQuantity(Long updateQuantity) {
         validateQuantity(updateQuantity);
         this.quantity = updateQuantity;
     }
@@ -72,7 +72,7 @@ public class Book extends BaseEntity {
         this.quantity++;
     }
 
-    private void validateQuantity(int quantity) {
+    private void validateQuantity(Long quantity) {
         if (quantity < 0) {
             throw new MinimumBookQuantityRequiredException(BookErrorCode.NEGATIVE_BOOK_QUANTITY_NOT_ALLOWED_ERROR);
         }

@@ -18,7 +18,7 @@ class BookRequestMapperTest extends BaseRepositoryList {
         String validTitle = "testTitle";
         String validISBN = "1234567890";
         String validAuthor = "tester";
-        int validQuantity = 3;
+        Long validQuantity = 3L;
 
         BookRequestDTO.Create validCreateDTO = BookRequestDTO.Create.builder()
                 .title(validTitle)

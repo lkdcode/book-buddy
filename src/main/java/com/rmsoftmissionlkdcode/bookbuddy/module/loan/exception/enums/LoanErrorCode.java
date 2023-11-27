@@ -11,6 +11,7 @@ public enum LoanErrorCode implements AppErrorCode {
     INVALID_RETURN_USER_ERROR("반납 대상자가 아닙니다.", HttpStatus.BAD_REQUEST),
     INVALID_RETURN_BOOK_ERROR("반납 도서가 아닙니다.", HttpStatus.BAD_REQUEST),
     NON_EXISTENT_LOAN_ID_ERROR("도서 대출 내역이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
+    DUPLICATE_RETURN_ERROR("이미 반납된 도서입니다.", HttpStatus.BAD_REQUEST),
     ;
 
     private final String message;

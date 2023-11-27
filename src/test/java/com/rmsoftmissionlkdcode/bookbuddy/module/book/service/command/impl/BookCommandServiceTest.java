@@ -21,17 +21,19 @@ class BookCommandServiceTest {
     private static final String AUTHOR = "author";
     private static final String TITLE = "title";
     private static final String ISBN = "1234567890";
-    private static final int QUANTITY = 3;
+    private static final Long QUANTITY = 3L;
     @Autowired
     private BookCommandUsecase bookCommandUsecase;
     @Autowired
     private BookRepository bookRepository;
 
     private BookResponseDTO.Create response;
+    private Long bookId;
 
     @BeforeEach
     void setResponse() {
         this.response = executeRegisterBook();
+        bookId = bookRepository.findByISBN(ISBN).getId();
     }
 
     @Test
@@ -59,7 +61,7 @@ class BookCommandServiceTest {
         // given
         String author = "author";
         String title = "title";
-        int quantity = 3;
+        Long quantity = 3L;
 
         BookRequestDTO.Create invalidRequest = BookRequestDTO.Create.builder()
                 .author(author)
@@ -84,11 +86,9 @@ class BookCommandServiceTest {
                 .quantity(QUANTITY)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        assertThatThrownBy(() -> bookCommandUsecase.executeUpdateBook(id, request))
+        assertThatThrownBy(() -> bookCommandUsecase.executeUpdateBook(bookId, request))
                 .isInstanceOf(NoChangesToApplyException.class);
     }
 
@@ -99,11 +99,9 @@ class BookCommandServiceTest {
         BookRequestDTO.Update request = BookRequestDTO.Update.builder()
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        assertThatThrownBy(() -> bookCommandUsecase.executeUpdateBook(id, request))
+        assertThatThrownBy(() -> bookCommandUsecase.executeUpdateBook(bookId, request))
                 .isInstanceOf(NoChangesToApplyException.class);
     }
 
@@ -116,11 +114,9 @@ class BookCommandServiceTest {
                 .title(changeTitle)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(id, request);
+        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(bookId, request);
         assertThat(response.title())
                 .isEqualTo(changeTitle);
 
@@ -143,11 +139,9 @@ class BookCommandServiceTest {
                 .author(changeAuthor)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(id, request);
+        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(bookId, request);
         assertThat(response.author())
                 .isEqualTo(changeAuthor);
 
@@ -170,11 +164,9 @@ class BookCommandServiceTest {
                 .ISBN(changeISBN)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(id, request);
+        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(bookId, request);
         assertThat(response.ISBN())
                 .isEqualTo(changeISBN);
 
@@ -192,16 +184,14 @@ class BookCommandServiceTest {
     @DisplayName("도서의 수량만 수정할 것이다.")
     void shouldSuccessfullyChangeBookQuantityTest() {
         // given
-        int changeQuantity = 33;
+        Long changeQuantity = 33L;
         BookRequestDTO.Update request = BookRequestDTO.Update.builder()
                 .quantity(changeQuantity)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(id, request);
+        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(bookId, request);
         assertThat(response.quantity())
                 .isEqualTo(changeQuantity);
 

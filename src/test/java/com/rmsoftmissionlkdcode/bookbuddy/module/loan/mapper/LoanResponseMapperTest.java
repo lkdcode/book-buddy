@@ -145,6 +145,7 @@ class LoanResponseMapperTest extends BaseRepositoryList {
         // given
         Book invalidBook = Book.builder()
                 .ISBN("1234567890")
+                .quantity(3L)
                 .build();
         User invalidUser = User.builder()
                 .build();

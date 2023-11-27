@@ -3,6 +3,7 @@ package com.rmsoftmissionlkdcode.bookbuddy.module.loan.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rmsoftmissionlkdcode.bookbuddy.global.common.BaseEntity;
 import com.rmsoftmissionlkdcode.bookbuddy.module.book.domain.Book;
+import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.AlreadyReturnedException;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.InvalidReturningBookException;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.InvalidReturningUserException;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.enums.LoanErrorCode;
@@ -49,6 +50,9 @@ public class Loan extends BaseEntity {
     }
 
     public void returnedAt() {
+        if (returnedAt != null) {
+            throw new AlreadyReturnedException(LoanErrorCode.DUPLICATE_RETURN_ERROR);
+        }
         this.returnedAt = LocalDateTime.now();
     }
 
