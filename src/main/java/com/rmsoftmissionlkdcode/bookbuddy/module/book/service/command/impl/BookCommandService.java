@@ -85,18 +85,34 @@ public class BookCommandService implements BookCommandUsecase {
     }
 
     private static boolean isISBNChanged(Book book, BookRequestDTO.Update updateDTO) {
+        if (updateDTO.ISBN() == null) {
+            return false;
+        }
+
         return !book.getISBN().equals(updateDTO.ISBN());
     }
 
     private static boolean isTitleChanged(Book book, BookRequestDTO.Update updateDTO) {
+        if (updateDTO.title() == null) {
+            return false;
+        }
+
         return !book.getTitle().equals(updateDTO.title());
     }
 
     private static boolean isAuthorChanged(Book book, BookRequestDTO.Update updateDTO) {
+        if (updateDTO.author() == null) {
+            return false;
+        }
+
         return !book.getAuthor().equals(updateDTO.author());
     }
 
     private static boolean isQuantityChanged(Book book, BookRequestDTO.Update updateDTO) {
+        if (updateDTO.quantity() == 0) {
+            return false;
+        }
+
         return book.getQuantity() != updateDTO.quantity();
     }
 }
