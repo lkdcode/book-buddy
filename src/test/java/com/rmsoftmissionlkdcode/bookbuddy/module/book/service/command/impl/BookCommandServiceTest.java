@@ -28,10 +28,12 @@ class BookCommandServiceTest {
     private BookRepository bookRepository;
 
     private BookResponseDTO.Create response;
+    private Long bookId;
 
     @BeforeEach
     void setResponse() {
         this.response = executeRegisterBook();
+        bookId = bookRepository.findByISBN(ISBN).getId();
     }
 
     @Test
@@ -84,11 +86,9 @@ class BookCommandServiceTest {
                 .quantity(QUANTITY)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        assertThatThrownBy(() -> bookCommandUsecase.executeUpdateBook(id, request))
+        assertThatThrownBy(() -> bookCommandUsecase.executeUpdateBook(bookId, request))
                 .isInstanceOf(NoChangesToApplyException.class);
     }
 
@@ -99,11 +99,9 @@ class BookCommandServiceTest {
         BookRequestDTO.Update request = BookRequestDTO.Update.builder()
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        assertThatThrownBy(() -> bookCommandUsecase.executeUpdateBook(id, request))
+        assertThatThrownBy(() -> bookCommandUsecase.executeUpdateBook(bookId, request))
                 .isInstanceOf(NoChangesToApplyException.class);
     }
 
@@ -116,11 +114,9 @@ class BookCommandServiceTest {
                 .title(changeTitle)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(id, request);
+        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(bookId, request);
         assertThat(response.title())
                 .isEqualTo(changeTitle);
 
@@ -143,11 +139,9 @@ class BookCommandServiceTest {
                 .author(changeAuthor)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(id, request);
+        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(bookId, request);
         assertThat(response.author())
                 .isEqualTo(changeAuthor);
 
@@ -170,11 +164,9 @@ class BookCommandServiceTest {
                 .ISBN(changeISBN)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(id, request);
+        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(bookId, request);
         assertThat(response.ISBN())
                 .isEqualTo(changeISBN);
 
@@ -197,11 +189,9 @@ class BookCommandServiceTest {
                 .quantity(changeQuantity)
                 .build();
 
-        Long id = bookRepository.findAll().get(0).getId();
-
         // when
         // then
-        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(id, request);
+        BookResponseDTO.Update response = bookCommandUsecase.executeUpdateBook(bookId, request);
         assertThat(response.quantity())
                 .isEqualTo(changeQuantity);
 
