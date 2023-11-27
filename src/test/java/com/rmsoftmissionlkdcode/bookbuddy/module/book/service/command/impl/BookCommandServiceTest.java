@@ -21,7 +21,7 @@ class BookCommandServiceTest {
     private static final String AUTHOR = "author";
     private static final String TITLE = "title";
     private static final String ISBN = "1234567890";
-    private static final int QUANTITY = 3;
+    private static final Long QUANTITY = 3L;
     @Autowired
     private BookCommandUsecase bookCommandUsecase;
     @Autowired
@@ -59,7 +59,7 @@ class BookCommandServiceTest {
         // given
         String author = "author";
         String title = "title";
-        int quantity = 3;
+        Long quantity = 3L;
 
         BookRequestDTO.Create invalidRequest = BookRequestDTO.Create.builder()
                 .author(author)
@@ -192,7 +192,7 @@ class BookCommandServiceTest {
     @DisplayName("도서의 수량만 수정할 것이다.")
     void shouldSuccessfullyChangeBookQuantityTest() {
         // given
-        int changeQuantity = 33;
+        Long changeQuantity = 33L;
         BookRequestDTO.Update request = BookRequestDTO.Update.builder()
                 .quantity(changeQuantity)
                 .build();

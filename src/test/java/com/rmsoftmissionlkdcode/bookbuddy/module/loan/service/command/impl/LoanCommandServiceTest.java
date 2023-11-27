@@ -34,7 +34,7 @@ class LoanCommandServiceTest {
     private static final String BOOK_TITLE = "book title";
     private static final String BOOK_AUTHOR = "book author";
     private static final String BOOK_ISBN = "1234567890";
-    private static final int BOOK_QUANTITY = 1;
+    private static final Long BOOK_QUANTITY = 1L;
 
     @Autowired
     private LoanCommandUsecase loanCommandUsecase;

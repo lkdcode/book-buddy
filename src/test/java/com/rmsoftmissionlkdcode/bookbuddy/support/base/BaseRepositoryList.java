@@ -37,7 +37,7 @@ public abstract class BaseRepositoryList {
     protected static final String BOOK_ISBN = "9791163033462";
     protected static final String BOOK_TITLE = "Do it! 알고리즘 코딩 테스트 자바 편";
     protected static final String BOOK_AUTHOR = "김종관";
-    protected static final int BOOK_QUANTITY = 12;
+    protected static final Long BOOK_QUANTITY = 12L;
 
     protected static final Long LOAN_ID = 6L;
     protected static final Long LOAN_USER_ID = 1L;

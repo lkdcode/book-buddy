@@ -16,6 +16,7 @@ class BookResponseMapperTest extends BaseRepositoryList {
     void setBook() {
         this.invalidBook = Book.builder()
                 .ISBN("1234567890")
+                .quantity(0L)
                 .build();
     }
 
