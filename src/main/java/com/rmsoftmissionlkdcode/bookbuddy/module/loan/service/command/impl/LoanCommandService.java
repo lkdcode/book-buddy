@@ -18,7 +18,6 @@ import com.rmsoftmissionlkdcode.bookbuddy.module.user.exception.NotFoundUserByEm
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.exception.enums.UserErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -30,9 +29,8 @@ public class LoanCommandService implements LoanCommandUsecase {
     private final LoanRepository loanRepository;
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED)
     public LoanResponseDTO.Borrowed executeLoanBookToUser(Long bookId, LoanRequestDTO.CheckOutDTO dto) {
-        Book book = findBookById(bookId);
+        Book book = findBookByIdForUpdate(bookId);
         User user = findUserByEmail(dto.userEmail());
 
         book.lendBook();
@@ -46,9 +44,9 @@ public class LoanCommandService implements LoanCommandUsecase {
 
     @Override
     public LoanResponseDTO.Returned executeReturnBook(Long loanId, Long bookId, LoanRequestDTO.CheckInDTO dto) {
-        Book book = findBookById(bookId);
+        Book book = findBookByIdForUpdate(bookId);
         User user = findUserByEmail(dto.userEmail());
-        Loan loan = findLoanById(loanId);
+        Loan loan = findLoanByIdForUpdate(loanId);
 
         loan.validateReturnUser(user.getEmail());
         loan.validateReturnBookId(book.getId());
@@ -58,8 +56,13 @@ public class LoanCommandService implements LoanCommandUsecase {
         return LoanResponseMapper.INSTANCE.loanToReturnedDTO(loan);
     }
 
-    private Loan findLoanById(Long loanId) {
-        return loanRepository.findById(loanId).orElseThrow(
+    private Book findBookByIdForUpdate(Long bookId) {
+        return bookRepository.findByIdForUpdate(bookId).orElseThrow(
+                () -> new BookNotFoundException(BookErrorCode.NOT_FOUND_BOOK_BY_ID_ERROR));
+    }
+
+    private Loan findLoanByIdForUpdate(Long loanId) {
+        return loanRepository.findByIdForUpdate(loanId).orElseThrow(
                 () -> new NotFoundLoanHistoryException(LoanErrorCode.NON_EXISTENT_LOAN_ID_ERROR));
     }
 
