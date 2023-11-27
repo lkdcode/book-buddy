@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -163,5 +164,41 @@ class LoanResponseMapperTest extends BaseRepositoryList {
 
         assertThat(loan.getBook().getId())
                 .isNull();
+    }
+
+    @Test
+    void convert() {
+        // given
+        // when
+        LoanResponseDTO.History history = LoanResponseMapper.INSTANCE.loanToHistoryDTO(super.loan);
+        // then
+
+        System.out.println(history);
+    }
+
+    @Test
+    void convert2() {
+        // given
+        int loanIndex = 0;
+        int expectedSize = 1;
+
+        // when
+        List<Loan> loanList = loanRepository.findByBookId(BOOK_ID);
+        List<LoanResponseDTO.History> loanListDTO = LoanResponseMapper.INSTANCE.loanToHistoryListDTO(loanList);
+
+        LoanResponseDTO.History history = loanListDTO.get(loanIndex);
+
+        // then
+        assertThat(loanList.size())
+                .isEqualTo(expectedSize);
+
+        assertThat(history.title())
+                .isEqualTo(BOOK_TITLE);
+
+        assertThat(history.author())
+                .isEqualTo(BOOK_AUTHOR);
+
+        assertThat(history.userEmail())
+                .isEqualTo(USER_EMAIL);
     }
 }
