@@ -2,6 +2,7 @@ package com.rmsoftmissionlkdcode.bookbuddy.module.book.domain;
 
 import com.rmsoftmissionlkdcode.bookbuddy.global.common.BaseEntity;
 import com.rmsoftmissionlkdcode.bookbuddy.module.book.exception.BookQuantityException;
+import com.rmsoftmissionlkdcode.bookbuddy.module.book.exception.InvalidISBNException;
 import com.rmsoftmissionlkdcode.bookbuddy.module.book.exception.MinimumBookQuantityRequiredException;
 import com.rmsoftmissionlkdcode.bookbuddy.module.book.exception.enums.BookErrorCode;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.domain.Loan;
@@ -79,7 +80,7 @@ public class Book extends BaseEntity {
 
     private void validateISBN(String ISBN) {
         if (!(ISBN.length() == 10 || ISBN.length() == 13)) {
-            throw new IllegalArgumentException("10 or 13");
+            throw new InvalidISBNException(BookErrorCode.INVALID_ISBN_LENGTH_ERROR);
         }
     }
 }

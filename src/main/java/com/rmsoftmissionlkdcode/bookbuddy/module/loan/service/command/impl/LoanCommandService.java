@@ -8,13 +8,13 @@ import com.rmsoftmissionlkdcode.bookbuddy.module.loan.domain.Loan;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.domain.repository.LoanRepository;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.dto.LoanRequestDTO;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.dto.LoanResponseDTO;
-import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.LoanHistoryNotFoundException;
+import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.NotFoundLoanHistoryException;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.exception.enums.LoanErrorCode;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.mapper.LoanResponseMapper;
 import com.rmsoftmissionlkdcode.bookbuddy.module.loan.service.command.LoanCommandUsecase;
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.domain.User;
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.domain.repository.UserRepository;
-import com.rmsoftmissionlkdcode.bookbuddy.module.user.exception.UserNotFoundByEmailException;
+import com.rmsoftmissionlkdcode.bookbuddy.module.user.exception.NotFoundUserByEmailException;
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.exception.enums.UserErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,6 @@ public class LoanCommandService implements LoanCommandUsecase {
         book.lendBook();
 
         Loan loan = LoanResponseMapper.INSTANCE.createLoanFromBookAndUser(book, user);
-        loan.borrowedAt();
 
         Loan savedLoan = loanRepository.save(loan);
 
@@ -61,7 +60,7 @@ public class LoanCommandService implements LoanCommandUsecase {
 
     private Loan findLoanById(Long loanId) {
         return loanRepository.findById(loanId).orElseThrow(
-                () -> new LoanHistoryNotFoundException(LoanErrorCode.NON_EXISTENT_LOAN_ID_ERROR));
+                () -> new NotFoundLoanHistoryException(LoanErrorCode.NON_EXISTENT_LOAN_ID_ERROR));
     }
 
     private Book findBookById(Long bookId) {
@@ -71,6 +70,6 @@ public class LoanCommandService implements LoanCommandUsecase {
 
     private User findUserByEmail(String userEmail) {
         return userRepository.findByEmail(userEmail).orElseThrow(
-                () -> new UserNotFoundByEmailException(UserErrorCode.NOT_FOUND_USER_BY_EMAIL_ERROR));
+                () -> new NotFoundUserByEmailException(UserErrorCode.NOT_FOUND_USER_BY_EMAIL_ERROR));
     }
 }

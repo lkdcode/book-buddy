@@ -1,5 +1,12 @@
 # Book Buddy
 
+## 개발 환경
+
+Java - 17<br/>
+Spring boot - 2.7.14<br/>
+Spring Data JPA<br/>
+MySQL,H2,Junit,Gradle,Swagger<br/>
+
 ## 기능 정의서
 
 > 1) _사용자_<br/>
