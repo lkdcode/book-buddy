@@ -1,0 +1,23 @@
+server:
+  port: 8181
+
+spring:
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+
+#  datasource:
+#    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+#    username: sa
+
+  h2:
+    console:
+      enabled: true
