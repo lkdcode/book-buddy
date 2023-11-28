@@ -51,8 +51,33 @@ class BookCommandApiTest extends BaseApiTest {
     }
 
     @Test
+    @DisplayName("중복 도서 등록에 실패할 것이다.")
+    void shouldFailToRegisterDuplicateBook() throws Exception {
+        // given
+        registerBook();
+
+        String expectedErrorMessage = "이미 등록되어 있는 책입니다.";
+
+        BookRequestDTO.Create request = BookRequestDTO.Create.builder()
+                .ISBN(BOOK_ISBN)
+                .title(BOOK_TITLE)
+                .author(BOOK_AUTHOR)
+                .quantity(BOOK_QUANTITY)
+                .build();
+
+        // when
+        // then
+        mockMvc.perform(post(CREATE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isConflict())
+                .andExpect(content().string(expectedErrorMessage))
+        ;
+    }
+
+    @Test
     @DisplayName("도서 제목을 입력하지않아 도서 등록에 실패할 것이다.")
-    void shouldFailFullyRegisterBookWithoutTitle() throws Exception {
+    void shouldFailToRegisterBookWithoutTitle() throws Exception {
         // given
         String expectedErrorMessage = "책의 제목을 입력해주세요.";
         BookRequestDTO.Create request = BookRequestDTO.Create.builder()
@@ -72,7 +97,7 @@ class BookCommandApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("ISBN을 입력하지않아 도서 등록에 실패할 것이다.")
-    void shouldFailFullyRegisterBookWithoutISBN() throws Exception {
+    void shouldFailToRegisterBookWithoutISBN() throws Exception {
         // given
         String expectedErrorMessage = "ISBN 고유 번호를 입력해주세요.";
         BookRequestDTO.Create request = BookRequestDTO.Create.builder()
@@ -92,7 +117,7 @@ class BookCommandApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("도서 저자를 입력하지않아 도서 등록에 실패할 것이다.")
-    void shouldFailFullyRegisterBookWithoutAuthor() throws Exception {
+    void shouldFailToRegisterBookWithoutAuthor() throws Exception {
         // given
         String expectedErrorMessage = "책의 저자를 입력해주세요.";
         BookRequestDTO.Create request = BookRequestDTO.Create.builder()
@@ -112,7 +137,7 @@ class BookCommandApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("도서 수량을 입력하지않아 도서 등록에 실패할 것이다.")
-    void shouldFailFullyRegisterBookWithoutQuantity() throws Exception {
+    void shouldFailToRegisterBookWithoutQuantity() throws Exception {
         // given
         String expectedErrorMessage = "책의 수량을 입력해주세요.";
         BookRequestDTO.Create request = BookRequestDTO.Create.builder()
@@ -132,7 +157,7 @@ class BookCommandApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("도서 수량을 음수로 입력하면 도서 등록에 실패할 것이다.")
-    void shouldFailFullyRegisterBookNegativeQuantity() throws Exception {
+    void shouldFailToRegisterBookNegativeQuantity() throws Exception {
         // given
         String expectedErrorMessage = "책의 수량은 음수가 될 수 없습니다.";
         BookRequestDTO.Create request = BookRequestDTO.Create.builder()
@@ -330,7 +355,7 @@ class BookCommandApiTest extends BaseApiTest {
 
     @Test
     @DisplayName("수정할 내용이 없다면 수정 요청이 실패할 것이다.")
-    void shouldFailFullyUpdateBookWithoutAllValues() throws Exception {
+    void shouldFailToUpdateBookWithoutAllValues() throws Exception {
         // given
         registerBook();
 
@@ -344,6 +369,34 @@ class BookCommandApiTest extends BaseApiTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
+                .andExpect(content().string(expectedErrorMessage));
+    }
+
+    @Test
+    @DisplayName("중복된 ISBN 으로 도서 수정에 실패할 것이다.")
+    void shouldFailToUpdateBookForDuplicateISBN() throws Exception {
+        // given
+        registerBook();
+        String otherISBN = "1231231230";
+        bookRepository.save(Book.builder()
+                .ISBN(otherISBN)
+                .author(BOOK_AUTHOR)
+                .title(BOOK_TITLE)
+                .quantity(BOOK_QUANTITY)
+                .build());
+
+        String expectedErrorMessage = "이미 등록되어 있는 책입니다.";
+
+        BookRequestDTO.Update request = BookRequestDTO.Update.builder()
+                .ISBN(otherISBN)
+                .build();
+
+        // when
+        // then
+        mockMvc.perform(patch(UPDATE_URL, bookId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isConflict())
                 .andExpect(content().string(expectedErrorMessage));
     }
 

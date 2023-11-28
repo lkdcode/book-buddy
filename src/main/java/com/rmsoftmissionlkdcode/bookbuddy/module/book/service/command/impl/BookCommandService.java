@@ -40,6 +40,7 @@ public class BookCommandService implements BookCommandUsecase {
         }
 
         if (isISBNChanged(book, updateDTO)) {
+            checkForDuplicateISBN(updateDTO.ISBN());
             book.updateISBN(updateDTO.ISBN());
         }
 
