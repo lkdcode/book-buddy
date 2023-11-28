@@ -66,28 +66,28 @@ class UserRegisterServiceTest {
                 .isInstanceOf(DataIntegrityViolationException.class);
     }
 
-//    @Test
-//    @DisplayName("중복된 이메일로 회원가입 시 익셉션이 발생할 것이다.")
-//    void shouldThrowExceptionWhenSignUpWithDuplicateEmailTest() {
-//        // given
-//        String name = "name";
-//        String password = "password123";
-//        String email = "email@test.com";
-//        UserRequestDTO.SignUp request = UserRequestDTO.SignUp.builder()
-//                .name(name)
-//                .password(password)
-//                .email(email)
-//                .build();
-//
-//        // when
-//        userRepository.save(User.builder()
-//                .name(name)
-//                .email(email)
-//                .password(password)
-//                .build());
-//
-//        // then
-//        assertThatThrownBy(() -> userRegisterService.excuteSignUp(request))
-//                .isInstanceOf(UserEmailDuplicationException.class);
-//    }
+    @Test
+    @DisplayName("중복된 이메일로 회원가입 시 익셉션이 발생할 것이다.")
+    void shouldThrowExceptionWhenSignUpWithDuplicateEmailTest() {
+        // given
+        String name = "name";
+        String password = "password123";
+        String email = "email@test.com";
+        UserRequestDTO.SignUp request = UserRequestDTO.SignUp.builder()
+                .name(name)
+                .password(password)
+                .email(email)
+                .build();
+
+        // when
+        userRepository.save(User.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .build());
+
+        // then
+        assertThatThrownBy(() -> userRegisterService.excuteSignUp(request))
+                .isInstanceOf(UserEmailDuplicationException.class);
+    }
 }
