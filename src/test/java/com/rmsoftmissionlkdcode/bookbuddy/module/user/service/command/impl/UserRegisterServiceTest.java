@@ -1,8 +1,11 @@
 package com.rmsoftmissionlkdcode.bookbuddy.module.user.service.command.impl;
 
+import com.rmsoftmissionlkdcode.bookbuddy.module.user.domain.User;
+import com.rmsoftmissionlkdcode.bookbuddy.module.user.domain.repository.UserRepository;
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.dto.UserRequestDTO;
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.dto.UserResponseDTO;
 import com.rmsoftmissionlkdcode.bookbuddy.module.user.exception.UserEmailDuplicationException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class UserRegisterServiceTest {
     @Autowired
     private UserRegisterService userRegisterService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    void setUserRepository() {
+        this.userRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("유효한 Request 로 회원가입에 성공할 것이다.")
@@ -69,8 +79,13 @@ class UserRegisterServiceTest {
                 .email(email)
                 .build();
 
-        UserResponseDTO.SignUp response = userRegisterService.excuteSignUp(request);
         // when
+        userRepository.save(User.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .build());
+
         // then
         assertThatThrownBy(() -> userRegisterService.excuteSignUp(request))
                 .isInstanceOf(UserEmailDuplicationException.class);
