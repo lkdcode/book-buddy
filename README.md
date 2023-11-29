@@ -108,7 +108,7 @@ erDiagram
 
 > END-POINT : Rmsoft-lkdcode-env.eba-pywyjuyk.ap-northeast-2.elasticbeanstalk.com
 
-![swaggerApi.png](outputs%2FswaggerApi.png)
+![SwaggerApi.png](outputs%2FSwaggerApi.png)
 
 ## Architecture
 
