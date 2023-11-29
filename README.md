@@ -2,10 +2,12 @@
 
 ## 개발 환경
 
-Java - 17<br/>
-Spring boot - 2.7.14<br/>
-Spring Data JPA<br/>
-MySQL,H2,Junit,Gradle,Swagger<br/>
+- Java - 17<br/>
+- Spring boot - 2.7.14<br/>
+- Spring Data JPA<br/>
+- CI/CD - Github Actions<br/>
+- AWS Elastic Beanstalk<br/>
+- MySql,H2,Junit5,Gradle,Swagger,PostMan<br/>
 
 ## 기능 정의서
 
@@ -104,8 +106,14 @@ erDiagram
 
 ## API
 
-![img.png](outputs/swaggerApi.png)
+> END-POINT : Rmsoft-lkdcode-env.eba-pywyjuyk.ap-northeast-2.elasticbeanstalk.com
 
-##
+![swaggerApi.png](outputs%2FswaggerApi.png)
 
-##
+## Architecture
+
+![Architecture.png](outputs%2FArchitecture.png)
+
+## AWS
+
+![AWS Elastic Beanstalk.png](outputs%2FAWS%20Elastic%20Beanstalk.png)
