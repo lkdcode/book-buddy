@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         , "/bulk/book-bulk-data.sql"
         , "/bulk/loan-bulk-data.sql"
 })
+@TestPropertySource(locations = "classpath:application-test.yml", properties = "spring.config.name=application-test")
 class LoanRepositoryTest {
     private static final Long VALID_ID = 3L;
     private static final Long INVALID_ID = 33L;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.NoSuchElementException;
@@ -18,6 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY
         , connection = EmbeddedDatabaseConnection.H2)
 @Sql("/bulk/user-bulk-data.sql")
+@TestPropertySource(locations = "classpath:application-test.yml", properties = "spring.config.name=application-test")
 class UserRepositoryTest {
     private static final Long ID = 7L;
     private static final String NAME = "조길동";

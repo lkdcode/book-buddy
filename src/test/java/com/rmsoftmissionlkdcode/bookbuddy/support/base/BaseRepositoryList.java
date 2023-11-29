@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         , "/bulk/book-bulk-data.sql"
         , "/bulk/loan-bulk-data.sql"
 })
+@TestPropertySource(locations = "classpath:application-test.yml", properties = "spring.config.name=application-test")
 public abstract class BaseRepositoryList {
     private static final int REPOSITORY_SIZE = 10;
     protected static final Long USER_ID = 1L;
